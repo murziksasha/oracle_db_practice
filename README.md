@@ -11,17 +11,37 @@ The database runs in a lightweight Docker container, and desktop tools such as O
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running on Windows.
 - At least 4 GB of RAM allocated to Docker.
 - [Oracle SQL Developer](https://www.oracle.com/database/sqldeveloper/technologies/download/) installed on Windows (or another database client such as DBeaver / VS Code Oracle extension).
+- [Node.js](https://nodejs.org/) (optional, if you want to use npm shortcut scripts).
 
 ---
 
-## Quick Start
+## Quick Start (NPM Scripts)
+
+You can manage the Oracle container easily via `npm`:
+
+| Action | NPM Shortcut | Docker Compose Equivalent |
+|---|---|---|
+| **Start Database** | `npm start` | `docker compose up -d` |
+| **View Logs** | `npm run logs` | `docker compose logs -f` |
+| **Check Status** | `npm run status` | `docker compose ps` |
+| **Stop Database** | `npm stop` | `docker compose down` |
+| **Restart Database** | `npm restart` | `docker compose restart` |
+| **Connect SQL*Plus (HR)** | `npm run sql` | `docker compose exec -it oracle sqlplus hr/hr@localhost:1521/FREEPDB1` |
+| **Connect SQL*Plus (SYS)** | `npm run sql:sys` | `docker compose exec -it oracle sqlplus sys/oracle@localhost:1521/FREEPDB1 as sysdba` |
+| **Container Shell** | `npm run bash` | `docker compose exec -it oracle bash` |
+| **Full Reset (Clean Data)** | `npm run clean` | `docker compose down -v` |
+
+---
+
+## Quick Start (Docker Compose CLI)
 
 ### 1. Start the Database
 
 Open a terminal (PowerShell or Command Prompt) in this directory and run:
 
 ```bash
-docker compose up -d
+npm start
+# or: docker compose up -d
 ```
 
 > **Note:** The initial image download (~1.5–2 GB) and first startup take a few minutes. Oracle needs time to initialize the container and run the HR schema setup script.
@@ -29,7 +49,8 @@ docker compose up -d
 To check container startup logs:
 
 ```bash
-docker compose logs -f
+npm run logs
+# or: docker compose logs -f
 ```
 
 Wait until you see:
@@ -43,10 +64,11 @@ DATABASE IS READY TO USE!
 To stop the container without losing your data:
 
 ```bash
-docker compose down
+npm stop
+# or: docker compose down
 ```
 
-> **Note on Data Persistence:** Data is stored in the Docker named volume `oracle-data`. Running `docker compose down` preserves all your tables and changes. If you want to reset everything back to a clean state, run `docker compose down -v`.
+> **Note on Data Persistence:** Data is stored in the Docker named volume `oracle-data`. Running `npm stop` preserves all your tables and changes. If you want to reset everything back to a clean state, run `npm run clean` (or `docker compose down -v`).
 
 ---
 
@@ -115,5 +137,6 @@ SELECT COUNT(*) FROM departments; -- Expected: 27
 You can also test queries from the command line inside Docker:
 
 ```bash
-docker exec -it oracle-practice sqlplus hr/hr@localhost:1521/FREEPDB1
+npm run sql
+# or: docker exec -it oracle-practice sqlplus hr/hr@localhost:1521/FREEPDB1
 ```

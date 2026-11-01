@@ -1,0 +1,34 @@
+{
+  "name": "oracle-db-practice",
+  "version": "1.0.0",
+  "description": "Local Oracle Database 23ai environment for SQL practice and learning",
+  "scripts": {
+    "start": "docker compose up -d",
+    "stop": "docker compose down",
+    "restart": "docker compose restart",
+    "status": "docker compose ps",
+    "logs": "docker compose logs -f",
+    "sql": "docker compose exec -it oracle sqlplus hr/hr@localhost:1521/FREEPDB1",
+    "sql:sys": "docker compose exec -it oracle sqlplus sys/oracle@localhost:1521/FREEPDB1 as sysdba",
+    "bash": "docker compose exec -it oracle bash",
+    "clean": "docker compose down -v",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:restart": "docker compose restart",
+    "db:status": "docker compose ps",
+    "db:logs": "docker compose logs -f",
+    "db:sql": "docker compose exec -it oracle sqlplus hr/hr@localhost:1521/FREEPDB1",
+    "db:sql:sys": "docker compose exec -it oracle sqlplus sys/oracle@localhost:1521/FREEPDB1 as sysdba",
+    "db:reset": "docker compose down -v"
+  },
+  "keywords": [
+    "oracle",
+    "oracle-database",
+    "sql",
+    "docker",
+    "oracle-23ai"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+
